@@ -21,13 +21,13 @@ interface ProfileHeaderProps {
 
 export default function ProfileHeader({
   name = "Raunak SIngh",
-  age = "15",
+  age = "16",
   title = "Developer • Builder • Web Dev",
   profileImage = "/pfp.jpg",
   socialLinks = {
-    twitter: "https://x.com/athrix_codes",
-    github: "https://github.com/Atharvsinh-codez",
-    linkedin: "https://www.linkedin.com/in/atharvsinh-jadav/",
+    twitter: "https://x.com/raunak_hoonmai",
+    github: "https://github.com/Raunak-dev-18",
+    linkedin: "https://www.linkedin.com/in/raunak-singh16/",
   }
 }: ProfileHeaderProps) {
   const { theme, setTheme } = useTheme();

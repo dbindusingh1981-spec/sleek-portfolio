@@ -14,7 +14,7 @@ export default function CallToAction({
   profileImage = "/pfp.jpg",
   profileAlt = "Profile",
   linkText = "Book a Free Call",
-  linkUrl = "https://cal.com/atharvsinh/15min",
+  linkUrl = "https://cal.com/raunak-hoonmai/15min",
   preText = "If you've read this far, you might be interested in what I do."
 }: CallToActionProps) {
 

@@ -4,51 +4,51 @@ export const faqs: FAQ[] = [
   {
     id: 'ai-as-tool',
     question: 'How I Use AI as a Tool, Not a Crutch',
-    answer: `AI is not my replacement — it's my force multiplier.
+    answer: `Think of AI as a really smart assistant, not the boss.
 
-I use AI for:
-• Exploring approaches
-• Writing boilerplate
-• Stress-testing ideas
+I lean on it for:
+• Brainstorming different angles
+• Generating repetitive code
+• Validating my concepts early
 
-But I never let it:
-• Decide architecture blindly
-• Hide things I don't understand
-• Replace debugging and reasoning
+But I draw the line at:
+• Letting it make structural choices without my input
+• Copy-pasting stuff I can't fully grasp
+• Skipping the actual problem-solving
 
-If I can't explain a piece of code in simple words, it doesn't go into production.
+Here's my rule: if I can't break it down simply enough to teach someone else, it's not ready for deployment.
 
-Using AI this way helps me move faster without losing control — and keeps my skills sharp.`
+This approach keeps me efficient while actually improving my craft — not letting it atrophy.`
   },
   {
     id: 'learning-new-tech',
     question: 'How I Learn New Tech Without Getting Overwhelmed',
-    answer: `I don't try to learn everything — I learn just enough to build something real.
+    answer: `Depth over breadth — that's my learning philosophy.
 
-Instead of watching endless tutorials, I pick a small problem and start coding immediately. When I get stuck, I learn exactly what's needed to move forward — nothing more.
+I don't binge courses or chase every new framework. Instead, I pick something I want to create and dive in immediately. Hit a roadblock? Then I figure out precisely what I need to clear it.
 
-My rule is simple:
-• Build first
-• Learn on demand
-• Refine after
+My workflow looks like:
+• Start building right away
+• Study when obstacles appear
+• Polish once it works
 
-This keeps learning practical, focused, and sustainable. Over time, small projects compound into real understanding — without burnout.`
+This keeps things manageable and hands-on. Tiny experiments gradually stack up into genuine expertise — minus the exhaustion.`
   },
   {
     id: 'confusion-to-clarity',
     question: 'How I Turn Confusion Into Clear, Working Systems',
-    answer: `Most problems look complicated at first because they're poorly defined, not because they're hard.
+    answer: `Complexity usually signals unclear thinking, not impossible challenges.
 
-When I feel stuck, I slow down and:
-• Write the problem in plain English
-• Break it into the smallest possible steps
-• Solve one piece at a time
+When I'm staring at a mess, I pump the brakes and:
+• Articulate what's actually wrong in my own words
+• Chop it into bite-sized chunks
+• Knock them out one by one
 
-Clarity comes from structure.
+Structure brings understanding.
 
-Once the system makes sense in my head, the code usually follows naturally.
+Once the mental model clicks into place, implementation becomes almost automatic.
 
-This mindset helps me debug faster, design better systems, and stay calm even when things get messy.`
+This habit accelerates debugging, improves architectural decisions, and keeps me grounded when projects get chaotic.`
   }
 ]
 

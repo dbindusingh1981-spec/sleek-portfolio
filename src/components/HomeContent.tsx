@@ -43,13 +43,13 @@ export default function NewHeroSection() {
           <Reveal delay={0.2}>
             <ProfileHeader
               name="Raunak SIngh"
-              age="15"
+              age="16"
               title="Developer • Builder • Web Dev"
               profileImage="/pfp.jpg"
               socialLinks={{
-                twitter: "https://x.com/athrix_codes",
-                github: "https://github.com/Atharvsinh-codez",
-                linkedin: "https://www.linkedin.com/in/atharvsinh-jadav/",
+                twitter: "https://x.com/raunak_hoonmai",
+                github: "https://github.com/Raunak-dev-18",
+                linkedin: "https://www.linkedin.com/in/raunak-singh16/",
               }}
             />
           </Reveal>
@@ -76,7 +76,7 @@ export default function NewHeroSection() {
               <Reveal delay={0.1}>
                 <ContentSection className="pb-6 sm:pb-8 pt-4 sm:pt-6 px-2 sm:px-0">
                   <ContentParagraph className="mb-4 text-base sm:text-lg">
-                    <span className="font-medium dark:text-white text-black">I build from zero.</span> Whether it&apos;s frontend, backend, full-stack applications, or AI-powered experiences, I work across the entire development lifecycle. From UI/UX to deployment to user feedback, I care less about technology debates and more about delivering results that people love using.
+                    <span className="font-medium dark:text-white text-black">I build from the ground up</span> frontend, backend, full-stack, and AI. From UI/UX to deployment, I focus on creating products people love, not debating technologies.
                   </ContentParagraph>
 
                   {/* Spotify Player */}
@@ -134,7 +134,7 @@ export default function NewHeroSection() {
 
                   {/* GitHub Activity Heatmap */}
                   <div className="px-4 mb-4 sm:mb-6">
-                    <GitHubActivity username="Atharvsinh-codez" />
+                    <GitHubActivity username="Raunak-dev-18" />
                   </div>
                 </div>
               </Reveal>

@@ -49,7 +49,7 @@ export default function AboutMe() {
 
                     {/* Bio */}
                     <p className="text-neutral-600 dark:text-neutral-400 text-sm sm:text-base leading-relaxed mb-6">
-                        I&apos;m a Full Stack web developer, Open Source Contributor. Also a Student, 15 Years. I love building products to solve real-world problems. I&apos;m specialized in building MVP&apos;s.
+                        I&apos;m a Full Stack web developer, Open Source Contributor. Also a Student, 16 Years. I love building products to solve real-world problems. I&apos;m specialized in building MVP&apos;s.
                     </p>
 
                     {/* Skills */}

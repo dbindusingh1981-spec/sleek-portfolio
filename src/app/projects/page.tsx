@@ -1,4 +1,4 @@
-import { projects } from '@/data/projects'
+import { projects, openSourceProjects } from '@/data/projects'
 import ProjectsListClient from '@/components/ProjectsListClient'
 
 export const metadata = {
@@ -7,5 +7,5 @@ export const metadata = {
 }
 
 export default function ProjectsPage() {
-  return <ProjectsListClient projects={projects} />
+  return <ProjectsListClient projects={projects} openSourceProjects={openSourceProjects} />
 }

@@ -4,7 +4,7 @@ import { fetchRepositoryStars } from '@/lib/github'
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const owner = searchParams.get('owner') || 'Atharvsinh-codez'
+    const owner = searchParams.get('owner') || 'Raunak-dev-18'
     const repo = searchParams.get('repo') || 'portfolio'
 
     const stars = await fetchRepositoryStars(owner, repo)

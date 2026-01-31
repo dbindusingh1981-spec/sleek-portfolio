@@ -23,7 +23,7 @@ export default function ExperienceContent() {
     {
       company: "A4F",
       position: "AI Model Manager & Project Lead",
-      duration: "September 2025 – December 2025",
+      duration: "Dec 25, 2025 – Present",
       description: "Managing cutting-edge AI models including OpenAI GPT-5 and Claude Opus 4.5. Overseeing project management, community engagement, and full website development and maintenance.",
       achievements: [
         "Providing and managing access to latest AI models including OpenAI GPT-5, Claude Opus 4.5, and other frontier models.",

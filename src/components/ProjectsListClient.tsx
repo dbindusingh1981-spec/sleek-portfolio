@@ -9,9 +9,10 @@ import { Project } from '@/types/project'
 
 interface ProjectsListClientProps {
   projects: Project[]
+  openSourceProjects: Project[]
 }
 
-export default function ProjectsListClient({ projects }: ProjectsListClientProps) {
+export default function ProjectsListClient({ projects, openSourceProjects }: ProjectsListClientProps) {
   return (
     <div className="min-h-screen transition-colors duration-300 relative" style={{ fontFamily: 'var(--font-hk-grotesk)' }}>
       <OnekoCat />
@@ -38,11 +39,34 @@ export default function ProjectsListClient({ projects }: ProjectsListClientProps
                 </div>
               </FadeIn>
               
-              <div className="sm:px-12 py-2">
-                <div className="px-4">
-                  <MasonryGrid projects={projects} />
+              {/* Projects Section */}
+              <FadeIn delay={0.2} duration={0.5}>
+                <div className="sm:px-12 py-2">
+                  <div className="px-4 mb-4">
+                    <h2 className="text-xl sm:text-2xl font-[family-name:var(--font-instrument-serif)] font-medium text-neutral-900 dark:text-neutral-100">
+                      Projects
+                    </h2>
+                  </div>
+                  <div className="px-4">
+                    <MasonryGrid projects={projects} />
+                  </div>
                 </div>
-              </div>
+              </FadeIn>
+
+              {/* Open Source Section */}
+              <FadeIn delay={0.3} duration={0.5}>
+                <div className="sm:px-12 py-2 mt-8">
+                  <div className="px-4 mb-4">
+                    <h2 className="text-xl sm:text-2xl font-[family-name:var(--font-instrument-serif)] font-medium text-neutral-900 dark:text-neutral-100">
+                      Open Source Projects
+                    </h2>
+                  </div>
+                  <div className="px-4">
+                    <MasonryGrid projects={openSourceProjects} />
+                  </div>
+                </div>
+              </FadeIn>
+              
               <div className="pb-24 sm:pb-28" />
             </div>
           </div>

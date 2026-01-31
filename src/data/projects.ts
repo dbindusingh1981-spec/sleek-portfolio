@@ -7,7 +7,7 @@ export const projects: Project[] = [
     description: "ObsidianUI empowers developers to build premium, motion-rich interfaces with ease. Transform your raw ideas into compelling visuals.",
     longDescription: "Founder of this project\n\nObsidianUI empowers developers to build premium, motion-rich interfaces with ease. Transform your raw ideas into compelling visuals.",
     liveLink: "https://obsidianui.com",
-    githubLink: "https://github.com/Atharvsinh-codez/ObsidianUI",
+    githubLink: "https://github.com/Raunak-dev-18/ObsidianUI",
     video: "obsidianui",
     image: "/images/obsidianui.png",
     tags: [
@@ -79,6 +79,91 @@ export const projects: Project[] = [
       "GitHub GraphQL API"
     ],
   },
+  {
+    id: "cognix",
+    title: "Cognix AI",
+    description: "Unified AI chat platform connecting users to multiple models (GPT-4, Claude, Gemini, and more) for conversations, coding, document assistance, automation, and productivity in one intuitive interface.",
+    liveLink: "https://cognixai.co",
+    image: "/images/cognix.png",
+    tags: [
+      "AI",
+      "Chat Platform",
+      "GPT-4",
+      "Claude",
+      "Gemini"
+    ],
+  },
+  {
+    id: "curator-idx",
+    title: "Curator IDX",
+    description: "Browser-based AI app builder with an IDE-like interface that helps users build and prototype AI apps interactively with agent-style assistance.",
+    liveLink: "https://idx.curator.codes",
+    image: "/images/curator-idx.png",
+    tags: [
+      "AI",
+      "IDE",
+      "App Builder",
+      "Prototyping"
+    ],
+  },
+  {
+    id: "bytecloud",
+    title: "ByteCloud",
+    description: "Cloud-focused web app offering simple, secure cloud storage and management tools accessible through a browser-based interface.",
+    liveLink: "https://bytecloud.skyflare.sh",
+    image: "/images/bytecloud.png",
+    tags: [
+      "Cloud",
+      "Storage",
+      "Web App",
+      "Security"
+    ],
+  },
+  {
+    id: "optivai",
+    title: "OptivAI",
+    description: "AI-powered online tutor where users can ask questions about math, science, and other topics and receive clear explanations from an AI tutor.",
+    liveLink: "https://optivai.in/",
+    image: "/images/optivai.png",
+    tags: [
+      "AI",
+      "Education",
+      "Tutoring",
+      "E-Learning"
+    ],
+  },
+];
+
+export const openSourceProjects: Project[] = [
+  {
+    id: "velle-baazi",
+    title: "Velle Baazi",
+    description: "A modern, Instagram-inspired social media platform built with React, TypeScript, and Firebase. Share posts, stories, reels, and connect with friends through real-time messaging.",
+    githubLink: "https://github.com/Raunak-dev-18/vellebaazi-os--Insta-Clone",
+    image: "/images/velle-baazi.png",
+    tags: [
+      "React",
+      "TypeScript",
+      "Firebase",
+      "Social Media",
+      "Open Source"
+    ],
+  },
+  {
+    id: "nuvdesk",
+    title: "NuvDesk",
+    description: "Modern, open-source helpdesk & ticketing system built with React, TypeScript, and Supabase. Features AI-powered ticket assignment, two-way email integration, team management, and real-time analytics.",
+    githubLink: "https://github.com/R8-Devsin/nuvdesk-support-suite",
+    image: "/images/nuvdesk.png",
+    tags: [
+      "React",
+      "TypeScript",
+      "Supabase",
+      "Helpdesk",
+      "Open Source",
+      "AI"
+    ],
+  },
 ];
 
 export const getProjectById = (id: string): Project | undefined => {
@@ -87,4 +172,12 @@ export const getProjectById = (id: string): Project | undefined => {
 
 export const getAllProjects = (): Project[] => {
   return projects
+}
+
+export const getOpenSourceProjectById = (id: string): Project | undefined => {
+  return openSourceProjects.find(project => project.id === id)
+}
+
+export const getAllOpenSourceProjects = (): Project[] => {
+  return openSourceProjects
 }
