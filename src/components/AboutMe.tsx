@@ -30,7 +30,7 @@ export default function AboutMe() {
                 <div className="shrink-0">
                     <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-2xl overflow-hidden shadow-lg">
                         <Image
-                            src="/images/about-me.jpg"
+                            src="/images/about-me.png"
                             alt="Raunak SIngh"
                             width={192}
                             height={192}

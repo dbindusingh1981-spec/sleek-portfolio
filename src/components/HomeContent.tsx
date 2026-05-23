@@ -35,7 +35,7 @@ export default function NewHeroSection() {
           <Reveal delay={0.1}>
             <BannerSection
               bannerImage="/banner.jpg"
-              quote="You make your own luck if you stay at it long enough."
+              quote=" "
             />
           </Reveal>
 
@@ -45,9 +45,9 @@ export default function NewHeroSection() {
               name="Raunak SIngh"
               age="16"
               title="Developer • Builder • Web Dev"
-              profileImage="/pfp.jpg"
+              profileImage="/pfp.png"
               socialLinks={{
-                twitter: "https://x.com/raunak_hoonmai",
+                twitter: "https://x.com/raunak_asusual",
                 github: "https://github.com/Raunak-dev-18",
                 linkedin: "https://www.linkedin.com/in/raunak-singh16/",
               }}

@@ -11,7 +11,7 @@ interface CallToActionProps {
 }
 
 export default function CallToAction({
-  profileImage = "/pfp.jpg",
+  profileImage = "/pfp.png",
   profileAlt = "Profile",
   linkText = "Book a Free Call",
   linkUrl = "https://cal.com/raunak-hoonmai/15min",

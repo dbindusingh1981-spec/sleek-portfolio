@@ -23,9 +23,9 @@ export default function ProfileHeader({
   name = "Raunak SIngh",
   age = "16",
   title = "Developer • Builder • Web Dev",
-  profileImage = "/pfp.jpg",
+  profileImage = "/pfp.png",
   socialLinks = {
-    twitter: "https://x.com/raunak_hoonmai",
+    twitter: "https://x.com/raunak_asusual",
     github: "https://github.com/Raunak-dev-18",
     linkedin: "https://www.linkedin.com/in/raunak-singh16/",
   }

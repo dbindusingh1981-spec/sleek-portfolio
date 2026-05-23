@@ -5,10 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Video from "next-video";
 import { useState } from 'react';
-import codedevs from '/videos/codedevs.mp4';
-import agenv from '/videos/agenv.mp4';
 import typegpt from '/videos/typegpt.mp4';
-import obsidianui from '/videos/obsidianui.mp4';
 
 interface MasonryProjectCardProps {
   project: Project;
@@ -17,14 +14,8 @@ interface MasonryProjectCardProps {
 
 const getVideoSource = (videoId: string) => {
   switch (videoId) {
-    case 'codedevs':
-      return codedevs;
-    case 'agenv':
-      return agenv;
     case 'typegpt':
       return typegpt;
-    case 'obsidianui':
-      return obsidianui;
     default:
       return null;
   }

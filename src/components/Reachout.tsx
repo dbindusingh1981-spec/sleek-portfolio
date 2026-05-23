@@ -21,7 +21,7 @@ export default function Reachout({
   title = "Let's connect",
   subtitle = "Find me on these platforms",
   socialLinks = {
-    twitter: "https://x.com/raunak_hoonmai",
+    twitter: "https://x.com/raunak_asusual",
     github: "https://github.com/Raunak-dev-18",
     linkedin: "https://www.linkedin.com/in/raunak-singh16/",
   }

@@ -8,10 +8,7 @@ import Image from "next/image";
 import Video from "next-video";
 import { ProjectNavigation } from './ProjectNavigation';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
-import codedevs from '/videos/codedevs.mp4';
-import agenv from '/videos/agenv.mp4';
 import typegpt from '/videos/typegpt.mp4';
-import obsidianui from '/videos/obsidianui.mp4';
 
 interface ProjectCardProps {
   project: Project;
@@ -22,14 +19,8 @@ interface ProjectCardProps {
 // Map video IDs to imported video assets
 const getVideoSource = (videoId: string) => {
   switch (videoId) {
-    case 'codedevs':
-      return codedevs;
-    case 'agenv':
-      return agenv;
     case 'typegpt':
       return typegpt;
-    case 'obsidianui':
-      return obsidianui;
     default:
       return null;
   }
