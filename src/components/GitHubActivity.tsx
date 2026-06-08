@@ -36,8 +36,8 @@ export default function GitHubActivity({ username = 'Raunak-dev-18' }: GitHubAct
                 const previousYear = currentYear - 1
 
                 const [responsePreviousYear, responseCurrentYear] = await Promise.all([
-                    fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${previousYear}`),
-                    fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${currentYear}`)
+                    fetch(`https://super-heart-c642.r8devsin.workers.dev/v4/Raunak-dev-18?y=2025`),
+                    fetch(`https://curly-salad-c6ad.r8devsin.workers.dev/v4/Raunak-dev-18?y=2026`)
                 ])
 
                 if (!responsePreviousYear.ok || !responseCurrentYear.ok) {
