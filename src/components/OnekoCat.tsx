@@ -176,7 +176,7 @@ export default function OnekoCat() {
         imageRendering: 'pixelated',
         left: `${nekoPos.x - 16}px`,
         top: `${nekoPos.y - 16}px`,
-        zIndex: 2147483647,
+        zIndex: 40,
         backgroundImage: 'url(/oneko.gif)',
       }}
     />

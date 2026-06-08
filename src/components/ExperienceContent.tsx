@@ -21,9 +21,24 @@ export default function ExperienceContent() {
 
   const experiences: ExperienceItem[] = [
     {
+      company: "Cognix AI",
+      position: "CEO and Founder",
+      duration: "Agust 12, 2025 – Present",
+      description: "Founded and leading Cognix AI, an advanced AI platform focused on providing access to state-of-the-art language models, image generation, voice AI, and developer tools. Spearheaded product strategy, full-stack development, infrastructure architecture, and AI integrations while building a scalable platform serving developers, students, and businesses worldwide.",
+      achievements: [
+        "Founded and successfully launched Cognix AI, a multi-model AI platform integrating leading AI providers and models.",
+  "Founded Cognix AI and led the development of a multi-model AI platform serving developers, students, and businesses.",
+"Partnered with industry-leading technology providers including AWS, NVIDIA, Sarvam AI, Firecrawl, Exa, Neon, E2B, and Daytona to enhance platform capabilities.",
+"Architected scalable cloud infrastructure and AI systems supporting advanced text, image, voice, and automation workflows.",
+"Owned product vision, engineering execution, strategic partnerships, and growth initiatives from concept to production.",
+      ],
+      href: "https://cognixai.co",
+      logoUrl: "/cognix.png",
+    },
+    {
       company: "A4F",
       position: "AI Model Manager & Project Lead",
-      duration: "Dec 25, 2025 – Present",
+      duration: "Dec 25, 2025 – March 20, 2026",
       description: "Managing cutting-edge AI models including OpenAI GPT-5 and Claude Opus 4.5. Overseeing project management, community engagement, and full website development and maintenance.",
       achievements: [
         "Providing and managing access to latest AI models including OpenAI GPT-5, Claude Opus 4.5, and other frontier models.",

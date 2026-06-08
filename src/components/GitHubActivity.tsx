@@ -27,79 +27,71 @@ export default function GitHubActivity({ username = 'Raunak-dev-18' }: GitHubAct
             try {
                 setLoading(true)
 
-                // Fetch contributions for 2025 and 2026
-                const [response2025, response2026] = await Promise.all([
-                    fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=2025`),
-                    fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=2026`)
+                const today = new Date()
+                today.setHours(0, 0, 0, 0)
+                const startDate = new Date(today)
+                startDate.setDate(startDate.getDate() - 364)
+
+                const currentYear = today.getFullYear()
+                const previousYear = currentYear - 1
+
+                const [responsePreviousYear, responseCurrentYear] = await Promise.all([
+                    fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${previousYear}`),
+                    fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${currentYear}`)
                 ])
 
-                if (!response2025.ok || !response2026.ok) {
+                if (!responsePreviousYear.ok || !responseCurrentYear.ok) {
                     throw new Error('Failed to fetch contributions')
                 }
 
-                const data2025 = await response2025.json()
-                const data2026 = await response2026.json()
+                const dataPreviousYear = await responsePreviousYear.json()
+                const dataCurrentYear = await responseCurrentYear.json()
 
-                // Combine and filter: Feb 2025 to Jan 2026
-                const allContributions: { date: string; count: number; level: number }[] = []
+                const contributionsMap = new Map<string, ContributionDay>()
 
-                // Add 2025 contributions from February onwards
-                if (data2025.contributions) {
-                    data2025.contributions.forEach((day: { date: string; count: number; level: number }) => {
-                        const date = new Date(day.date)
-                        if (date.getMonth() >= 1) { // February = 1
-                            allContributions.push(day)
-                        }
-                    })
-                }
+                ;[dataPreviousYear, dataCurrentYear].forEach((data) => {
+                    if (data?.contributions) {
+                        data.contributions.forEach((day: ContributionDay) => {
+                            contributionsMap.set(day.date, day)
+                        })
+                    }
+                })
 
-                // Add 2026 contributions (January only, up to current date)
-                if (data2026.contributions) {
-                    data2026.contributions.forEach((day: { date: string; count: number; level: number }) => {
-                        const date = new Date(day.date)
-                        if (date.getMonth() === 0) { // January = 0
-                            allContributions.push(day)
-                        }
-                    })
+                const days: ContributionDay[] = []
+                const cursor = new Date(startDate)
+
+                while (cursor <= today) {
+                    const dateKey = cursor.toISOString().slice(0, 10)
+                    const day = contributionsMap.get(dateKey) ?? {
+                        date: dateKey,
+                        count: 0,
+                        level: 0
+                    }
+                    days.push(day)
+                    cursor.setDate(cursor.getDate() + 1)
                 }
 
                 const weeks: ContributionWeek[] = []
                 let currentWeek: ContributionDay[] = []
                 let total = 0
-                let isFirstDay = true
 
-                allContributions.forEach((day) => {
-                    const date = new Date(day.date)
-                    const dayOfWeek = date.getDay()
+                days.forEach((day) => {
+                    const dayDate = new Date(day.date)
+                    const dayOfWeek = dayDate.getDay()
 
-                    // For the first day, pad the week with empty days if it doesn't start on Sunday
-                    if (isFirstDay && dayOfWeek !== 0) {
-                        for (let i = 0; i < dayOfWeek; i++) {
-                            currentWeek.push({
-                                date: '',
-                                count: 0,
-                                level: 0
-                            })
-                        }
-                        isFirstDay = false
-                    }
-                    isFirstDay = false
+                    currentWeek.push(day)
+                    total += day.count
 
-                    if (dayOfWeek === 0 && currentWeek.length > 0) {
+                    if (dayOfWeek === 6) {
                         weeks.push({ contributionDays: currentWeek })
                         currentWeek = []
                     }
-
-                    currentWeek.push({
-                        date: day.date,
-                        count: day.count,
-                        level: day.level
-                    })
-
-                    total += day.count
                 })
 
                 if (currentWeek.length > 0) {
+                    while (currentWeek.length < 7) {
+                        currentWeek.push({ date: '', count: 0, level: 0 })
+                    }
                     weeks.push({ contributionDays: currentWeek })
                 }
 
@@ -258,13 +250,13 @@ export default function GitHubActivity({ username = 'Raunak-dev-18' }: GitHubAct
                                 <div
                                     key={dayIndex}
                                     className={`aspect-square w-full rounded-[2px] transition-colors ${getContributionColor(day.level)}`}
-                                    title={`${day.count} contributions on ${new Date(day.date).toLocaleDateString('en-US', {
+                                    title={day.date ? `${day.count} contributions on ${new Date(day.date).toLocaleDateString('en-US', {
                                         weekday: 'short',
                                         month: 'short',
                                         day: 'numeric',
                                         year: 'numeric'
-                                    })}`}
-                                    aria-label={`${day.count} contributions on ${day.date}`}
+                                    })}` : `${day.count} contributions`}
+                                    aria-label={day.date ? `${day.count} contributions on ${day.date}` : `${day.count} contributions`}
                                 />
                             ))}
                         </div>
