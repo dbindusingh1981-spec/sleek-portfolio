@@ -4,6 +4,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   env: {
     GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+    DATABASE_URL: process.env.DATABASE_URL,
   },
   images: {
     remotePatterns: [
