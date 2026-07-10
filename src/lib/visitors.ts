@@ -43,17 +43,7 @@ async function query(text: string, params?: (string | number | boolean | null)[]
   }
 }
 
-function getDebugInfo(error?: unknown) {
-  return {
-    databaseUrlSet: !!process.env.DATABASE_URL,
-    databaseUrlPrefix: process.env.DATABASE_URL
-      ? process.env.DATABASE_URL.substring(0, 20) + '...'
-      : '(not set)',
-    ...(error ? { error: error instanceof Error ? error.message : String(error) } : {}),
-  }
-}
-
-export async function trackVisit(visitorId: string): Promise<VisitorData & { _debug?: Record<string, unknown> }> {
+export async function trackVisit(visitorId: string): Promise<VisitorData> {
   try {
     await query(`CREATE TABLE IF NOT EXISTS visitors (
       id SERIAL PRIMARY KEY,
@@ -69,26 +59,20 @@ export async function trackVisit(visitorId: string): Promise<VisitorData & { _de
     const result = await query('SELECT COUNT(*)::text as count FROM visitors')
     const uniqueCount = parseInt(result?.rows[0]?.count || '0', 10)
 
-    return { uniqueVisitors: uniqueCount, _debug: getDebugInfo() }
+    return { uniqueVisitors: uniqueCount }
   } catch (error) {
     console.error('Error tracking visitor:', error)
-    return {
-      uniqueVisitors: 0,
-      _debug: getDebugInfo(error),
-    }
+    return { uniqueVisitors: 0 }
   }
 }
 
-export async function getVisitorStats(): Promise<{ uniqueVisitors: number; _debug?: Record<string, unknown> }> {
+export async function getVisitorStats(): Promise<{ uniqueVisitors: number }> {
   try {
     const result = await query('SELECT COUNT(*)::text as count FROM visitors')
     const uniqueCount = parseInt(result?.rows[0]?.count || '0', 10)
-    return { uniqueVisitors: uniqueCount, _debug: getDebugInfo() }
+    return { uniqueVisitors: uniqueCount }
   } catch (error) {
     console.error('Error getting visitor stats:', error)
-    return {
-      uniqueVisitors: 0,
-      _debug: getDebugInfo(error),
-    }
+    return { uniqueVisitors: 0 }
   }
 }

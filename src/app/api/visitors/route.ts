@@ -30,8 +30,7 @@ export async function POST(request: NextRequest) {
     
     return NextResponse.json({
       success: true,
-      uniqueVisitors: data.uniqueVisitors,
-      ...(data._debug ? { _debug: data._debug } : {}),
+      uniqueVisitors: data.uniqueVisitors
     })
   } catch (error) {
     console.error('Error tracking visitor:', error)
@@ -40,8 +39,7 @@ export async function POST(request: NextRequest) {
       const stats = await getVisitorStats()
       return NextResponse.json({
         success: true,
-        ...stats,
-        ...(stats._debug ? { _debug: stats._debug } : {}),
+        ...stats
       })
     } catch {
       return NextResponse.json({
@@ -58,8 +56,7 @@ export async function GET() {
     const stats = await getVisitorStats()
     return NextResponse.json({
       success: true,
-      ...stats,
-      ...(stats._debug ? { _debug: stats._debug } : {}),
+      ...stats
     })
   } catch {
     return NextResponse.json({
@@ -69,4 +66,3 @@ export async function GET() {
     }, { status: 500 })
   }
 }
-
