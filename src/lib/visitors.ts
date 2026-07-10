@@ -1,9 +1,24 @@
 import { neon } from '@neondatabase/serverless'
 
-const sql = neon(process.env.DATABASE_URL!)
-
 export interface VisitorData {
   uniqueVisitors: number
+}
+
+type SqlTag = ReturnType<typeof neon>
+let sql: SqlTag | null = null
+
+function getSql(): SqlTag | null {
+  if (!sql) {
+    const url = process.env.DATABASE_URL
+    if (!url) return null
+    try {
+      sql = neon(url)
+    } catch (e) {
+      console.error('Failed to initialize Neon connection:', e)
+      return null
+    }
+  }
+  return sql
 }
 
 export function generateVisitorId(ip: string | null, userAgent: string | null, fingerprint?: string): string {
@@ -17,7 +32,9 @@ export function generateVisitorId(ip: string | null, userAgent: string | null, f
 }
 
 export async function initVisitorTable(): Promise<void> {
-  await sql`
+  const db = getSql()
+  if (!db) return
+  await db`
     CREATE TABLE IF NOT EXISTS visitors (
       id SERIAL PRIMARY KEY,
       visitor_id TEXT UNIQUE NOT NULL,
@@ -28,15 +45,19 @@ export async function initVisitorTable(): Promise<void> {
 
 export async function trackVisit(visitorId: string): Promise<VisitorData> {
   try {
-    // Insert visitor if not exists
-    await sql`
+    const db = getSql()
+    if (!db) return { uniqueVisitors: 0 }
+
+    await initVisitorTable()
+
+    await db`
       INSERT INTO visitors (visitor_id)
       VALUES (${visitorId})
       ON CONFLICT (visitor_id) DO NOTHING
     `
 
-    // Get count
-    const result = await sql`SELECT COUNT(*) as count FROM visitors`
+    type CountRow = { count: string }
+    const result = await db`SELECT COUNT(*) as count FROM visitors` as CountRow[]
     const uniqueCount = parseInt(result[0]?.count || '0', 10)
 
     return { uniqueVisitors: uniqueCount }
@@ -48,7 +69,11 @@ export async function trackVisit(visitorId: string): Promise<VisitorData> {
 
 export async function getVisitorStats(): Promise<{ uniqueVisitors: number }> {
   try {
-    const result = await sql`SELECT COUNT(*) as count FROM visitors`
+    const db = getSql()
+    if (!db) return { uniqueVisitors: 0 }
+
+    type CountRow = { count: string }
+    const result = await db`SELECT COUNT(*) as count FROM visitors` as CountRow[]
     const uniqueCount = parseInt(result[0]?.count || '0', 10)
     return { uniqueVisitors: uniqueCount }
   } catch (error) {
