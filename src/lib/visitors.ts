@@ -43,6 +43,16 @@ async function query(text: string, params?: (string | number | boolean | null)[]
   }
 }
 
+function getDebugInfo(error?: unknown) {
+  return {
+    databaseUrlSet: !!process.env.DATABASE_URL,
+    databaseUrlPrefix: process.env.DATABASE_URL
+      ? process.env.DATABASE_URL.substring(0, 20) + '...'
+      : '(not set)',
+    ...(error ? { error: error instanceof Error ? error.message : String(error) } : {}),
+  }
+}
+
 export async function trackVisit(visitorId: string): Promise<VisitorData & { _debug?: Record<string, unknown> }> {
   try {
     await query(`CREATE TABLE IF NOT EXISTS visitors (
@@ -59,16 +69,12 @@ export async function trackVisit(visitorId: string): Promise<VisitorData & { _de
     const result = await query('SELECT COUNT(*)::text as count FROM visitors')
     const uniqueCount = parseInt(result?.rows[0]?.count || '0', 10)
 
-    return { uniqueVisitors: uniqueCount }
+    return { uniqueVisitors: uniqueCount, _debug: getDebugInfo() }
   } catch (error) {
-    const msg = error instanceof Error ? error.message : String(error)
-    console.error('Error tracking visitor:', msg)
+    console.error('Error tracking visitor:', error)
     return {
       uniqueVisitors: 0,
-      _debug: {
-        databaseUrlSet: !!process.env.DATABASE_URL,
-        error: msg,
-      },
+      _debug: getDebugInfo(error),
     }
   }
 }
@@ -77,16 +83,12 @@ export async function getVisitorStats(): Promise<{ uniqueVisitors: number; _debu
   try {
     const result = await query('SELECT COUNT(*)::text as count FROM visitors')
     const uniqueCount = parseInt(result?.rows[0]?.count || '0', 10)
-    return { uniqueVisitors: uniqueCount }
+    return { uniqueVisitors: uniqueCount, _debug: getDebugInfo() }
   } catch (error) {
-    const msg = error instanceof Error ? error.message : String(error)
-    console.error('Error getting visitor stats:', msg)
+    console.error('Error getting visitor stats:', error)
     return {
       uniqueVisitors: 0,
-      _debug: {
-        databaseUrlSet: !!process.env.DATABASE_URL,
-        error: msg,
-      },
+      _debug: getDebugInfo(error),
     }
   }
 }
