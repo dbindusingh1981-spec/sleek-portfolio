@@ -1,24 +1,27 @@
-import { neon } from '@neondatabase/serverless'
+import { Pool } from 'pg'
 
 export interface VisitorData {
   uniqueVisitors: number
 }
 
-type SqlTag = ReturnType<typeof neon>
-let sql: SqlTag | null = null
+let pool: Pool | null = null
 
-function getSql(): SqlTag | null {
-  if (!sql) {
+function getPool(): Pool | null {
+  if (!pool) {
     const url = process.env.DATABASE_URL
     if (!url) return null
-    try {
-      sql = neon(url)
-    } catch (e) {
-      console.error('Failed to initialize Neon connection:', e)
-      return null
-    }
+    pool = new Pool({
+      connectionString: url,
+      max: 1,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
+      ssl: { rejectUnauthorized: false },
+    })
+    pool.on('error', (err) => {
+      console.error('Unexpected pool error:', err)
+    })
   }
-  return sql
+  return pool
 }
 
 export function generateVisitorId(ip: string | null, userAgent: string | null, fingerprint?: string): string {
@@ -32,35 +35,41 @@ export function generateVisitorId(ip: string | null, userAgent: string | null, f
 }
 
 export async function initVisitorTable(): Promise<void> {
-  const db = getSql()
-  if (!db) return
-  await db`
-    CREATE TABLE IF NOT EXISTS visitors (
-      id SERIAL PRIMARY KEY,
-      visitor_id TEXT UNIQUE NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-  `
+  const p = getPool()
+  if (!p) return
+  const client = await p.connect()
+  try {
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS visitors (
+        id SERIAL PRIMARY KEY,
+        visitor_id TEXT UNIQUE NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `)
+  } finally {
+    client.release()
+  }
 }
 
 export async function trackVisit(visitorId: string): Promise<VisitorData> {
   try {
-    const db = getSql()
-    if (!db) return { uniqueVisitors: 0 }
+    const p = getPool()
+    if (!p) return { uniqueVisitors: 0 }
 
-    await initVisitorTable()
+    const client = await p.connect()
+    try {
+      await client.query(
+        'INSERT INTO visitors (visitor_id) VALUES ($1) ON CONFLICT (visitor_id) DO NOTHING',
+        [visitorId]
+      )
 
-    await db`
-      INSERT INTO visitors (visitor_id)
-      VALUES (${visitorId})
-      ON CONFLICT (visitor_id) DO NOTHING
-    `
+      const result = await client.query('SELECT COUNT(*)::text as count FROM visitors')
+      const uniqueCount = parseInt(result.rows[0]?.count || '0', 10)
 
-    type CountRow = { count: string }
-    const result = await db`SELECT COUNT(*) as count FROM visitors` as CountRow[]
-    const uniqueCount = parseInt(result[0]?.count || '0', 10)
-
-    return { uniqueVisitors: uniqueCount }
+      return { uniqueVisitors: uniqueCount }
+    } finally {
+      client.release()
+    }
   } catch (error) {
     console.error('Error tracking visitor:', error)
     return { uniqueVisitors: 0 }
@@ -69,13 +78,17 @@ export async function trackVisit(visitorId: string): Promise<VisitorData> {
 
 export async function getVisitorStats(): Promise<{ uniqueVisitors: number }> {
   try {
-    const db = getSql()
-    if (!db) return { uniqueVisitors: 0 }
+    const p = getPool()
+    if (!p) return { uniqueVisitors: 0 }
 
-    type CountRow = { count: string }
-    const result = await db`SELECT COUNT(*) as count FROM visitors` as CountRow[]
-    const uniqueCount = parseInt(result[0]?.count || '0', 10)
-    return { uniqueVisitors: uniqueCount }
+    const client = await p.connect()
+    try {
+      const result = await client.query('SELECT COUNT(*)::text as count FROM visitors')
+      const uniqueCount = parseInt(result.rows[0]?.count || '0', 10)
+      return { uniqueVisitors: uniqueCount }
+    } finally {
+      client.release()
+    }
   } catch (error) {
     console.error('Error getting visitor stats:', error)
     return { uniqueVisitors: 0 }
